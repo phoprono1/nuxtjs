@@ -23,6 +23,10 @@ import { Progress } from "@/components/ui/progress"; // Import Progress
 import { ref } from "vue";
 import { useToast } from "@/components/ui/toast/use-toast";
 import type { SuccessResponse, ErrorResponse } from "@/interfaces/api/register";
+import { useRuntimeConfig } from "nuxt/app"; // Thêm import này
+
+const config = useRuntimeConfig();
+const backendUrl = config.public.backendUrl;
 
 const firstName = ref("");
 const lastName = ref("");
@@ -47,9 +51,9 @@ const handleRegister = async () => {
 
     isLoading.value = true;
 
-    // Dùng generic type với interfaces từ file riêng
+    // Sử dụng backendUrl thay vì URL hardcode
     const { data, error } = await useFetch<SuccessResponse, ErrorResponse>(
-      "http://localhost:3005/api/user/create",
+      `${backendUrl}/api/user/create`,
       {
         method: "POST",
         body: {
