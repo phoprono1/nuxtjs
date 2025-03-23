@@ -20,6 +20,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       API_BASE_URL: process.env.API_BASE_URL,
+      backendUrl: process.env.BACKEND_URL || 'http://localhost:3005',
     },
   },
   css: ["~/assets/css/scrollbar.css"],

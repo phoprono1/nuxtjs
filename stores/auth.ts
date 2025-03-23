@@ -1,5 +1,5 @@
-// stores/auth.ts
 import { defineStore } from "pinia";
+import { useRuntimeConfig } from "nuxt/app"; // Thêm import này
 
 interface UserResponse {
   statusCode: number;
@@ -26,11 +26,11 @@ export const useAuthStore = defineStore("auth", {
   }),
   actions: {
     async fetchProfile() {
-      // Bỏ tham số token vì dùng cookie
+      const config = useRuntimeConfig(); // Lấy runtimeConfig
       try {
         const response = await $fetch<UserResponse>("/api/user/profile", {
-          baseURL: "http://localhost:3005",
-          credentials: "include", // Gửi cookie tự động
+          baseURL: config.public.backendUrl as string, // Sử dụng backendUrl từ runtimeConfig
+          credentials: "include",
         });
         console.log("fetchProfile response:", response);
         this.user = response.statusCode === 200 ? response.data : null;
@@ -41,17 +41,18 @@ export const useAuthStore = defineStore("auth", {
       }
     },
     async login(email: string, password: string) {
+      const config = useRuntimeConfig(); // Lấy runtimeConfig
       try {
         const response = await $fetch<LoginResponse>("/api/user/login", {
-          baseURL: "http://localhost:3005",
+          baseURL: config.public.backendUrl as string, // Sử dụng backendUrl từ runtimeConfig
           method: "POST",
           body: { email, password },
-          credentials: "include", // Đảm bảo nhận cookie từ backend
+          credentials: "include",
         });
         console.log("login response:", response);
         if (response.statusCode === 201) {
-          this.token = response.data.token; // Lưu token trong state (không cần localStorage)
-          await this.fetchProfile(); // Gọi fetchProfile dùng cookie
+          this.token = response.data.token;
+          await this.fetchProfile();
           console.log("login completed, user:", this.user);
         }
       } catch (e: any) {
@@ -61,13 +62,13 @@ export const useAuthStore = defineStore("auth", {
         throw new Error(e.data?.message || "Có lỗi xảy ra khi đăng nhập.");
       }
     },
-
     async logout() {
+      const config = useRuntimeConfig(); // Lấy runtimeConfig
       try {
         await $fetch("/api/user/logout", {
-          baseURL: "http://localhost:3005",
+          baseURL: config.public.backendUrl as string, // Sử dụng backendUrl từ runtimeConfig
           method: "POST",
-          credentials: "include", // Gửi cookie để logout
+          credentials: "include",
         });
       } catch (e) {
         console.error("logout failed:", e);
@@ -76,8 +77,6 @@ export const useAuthStore = defineStore("auth", {
         this.token = null;
       }
     },
-
-    // Kiểm tra xem user đã đăng nhập chưa dựa trên cookie
     async checkAuth() {
       if (!this.user) {
         try {
