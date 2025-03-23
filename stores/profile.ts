@@ -1,5 +1,6 @@
 // stores/profile.ts
 import { defineStore } from "pinia";
+import { useRuntimeConfig } from "nuxt/app"; // Thêm import này để lấy runtimeConfig
 
 // Interface cho thông tin người dùng (dựa trên API /api/user/me)
 export interface UserProfile {
@@ -33,6 +34,7 @@ export const useProfileStore = defineStore("profile", {
 
   actions: {
     async fetchUserProfile() {
+      const config = useRuntimeConfig(); // Lấy runtimeConfig
       this.loading = true;
       this.error = null;
 
@@ -40,7 +42,7 @@ export const useProfileStore = defineStore("profile", {
         const response = await $fetch<BaseResponse<UserProfile>>(
           "/api/user/me",
           {
-            baseURL: "http://localhost:3005",
+            baseURL: config.public.backendUrl as string, // Sử dụng backendUrl từ runtimeConfig
             method: "GET",
             credentials: "include", // Gửi cookie tự động
           }
