@@ -50,7 +50,7 @@ export const deleteUser = async (id: string) => {
 
 export const getUserById = async (id: string) => {
   try {
-    const response = await axios.get(`http://localhost:3005/api/user/detail`, {
+    const response = await axios.get(API_ENDPOINTS().USER_DETAIL, {
       params: { id },
     });
     return response.data;

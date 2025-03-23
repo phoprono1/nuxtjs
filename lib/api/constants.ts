@@ -13,6 +13,7 @@ export const API_ENDPOINTS = () => {
     USER_LIST: `${API_BASE_URL}/user/list`,
     USER_DELETE: `${API_BASE_URL}/user/delete`,
     USER_UPDATE: `${API_BASE_URL}/user/update`,
+    USER_DETAIL: `${API_BASE_URL}/user/detail`,
 
     // Blog
     BLOG_LIST_PAGE: `${API_BASE_URL}/blog/list-page`,
