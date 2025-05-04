@@ -41,7 +41,7 @@ const handleLogin = async () => {
     });
     email.value = "";
     password.value = "";
-    navigateTo("/");
+    navigateTo("/admin/dashboard");
   } catch (error) {
     toast({
       title: "Lỗi",
