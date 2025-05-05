@@ -18,5 +18,8 @@ export const API_ENDPOINTS = () => {
     // Blog
     BLOG_LIST_PAGE: `${API_BASE_URL}/blog/list-page`,
     BLOG_DELETE: `${API_BASE_URL}/blog/delete`,
+    BLOG_UPDATE: `${API_BASE_URL}/blog/update`,
+    BLOG_DETAIL: `${API_BASE_URL}/blog/detail`,
+    BLOG_ID: `${API_BASE_URL}/blog`,
   };
 };

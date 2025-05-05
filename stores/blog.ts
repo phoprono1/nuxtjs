@@ -7,6 +7,7 @@ const { toast } = useToast();
 
 // Interface cho dữ liệu blog (dựa trên schema backend)
 export interface Blog {
+  _id: string | undefined;
   id?: string;
   title: string;
   contentPath: string; // Thay contentHash thành contentPath

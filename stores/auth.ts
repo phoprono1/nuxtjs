@@ -70,6 +70,7 @@ export const useAuthStore = defineStore("auth", {
           method: "POST",
           credentials: "include",
         });
+        console.log("logout response:", "Logout successful");
       } catch (e) {
         console.error("logout failed:", e);
       } finally {
