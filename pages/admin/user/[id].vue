@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { toast } from '~/components/ui/toast';
-import { getUserById, updateUser } from '~/lib/api/user';
-import Toaster from '@/components/ui/toast/Toaster.vue';
+import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { toast } from "~/components/ui/toast";
+import { getUserById, updateUser } from "~/lib/api/user";
+import Toaster from "@/components/ui/toast/Toaster.vue";
 import {
   Select,
   SelectContent,
@@ -14,7 +14,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 
 const route = useRoute();
 const userId = route.params.id as string;
@@ -31,19 +31,17 @@ interface UserData {
 }
 
 const userData = ref<UserData>({
-  username: '',
-  password: '',
-  email: '',
-  wallet: '',
-  address: '',
-  phone: '',
-  role: '',
-  status: '',
+  username: "",
+  password: "",
+  email: "",
+  wallet: "",
+  address: "",
+  phone: "",
+  role: "",
+  status: "",
 });
 
-const userUpdate = ref<Partial<UserProfile>>({
-  
-});
+const userUpdate = ref<Partial<UserProfile>>({});
 
 onMounted(async () => {
   try {
@@ -51,13 +49,12 @@ onMounted(async () => {
     if (response.statusCode === 200) {
       userData.value = { ...response.data };
     }
-    
   } catch (error) {
     toast({
-      title: 'Lỗi',
-      description: 'Không thể tải dữ liệu người dùng.',
+      title: "Lỗi",
+      description: "Không thể tải dữ liệu người dùng.",
     });
-    console.error('Lỗi tải dữ liệu người dùng:', error);
+    console.error("Lỗi tải dữ liệu người dùng:", error);
   }
 });
 
@@ -65,33 +62,30 @@ const handleSubmit = async () => {
   try {
     // Lọc bỏ các trường trống trước khi gửi
     const dataToUpdate = Object.fromEntries(
-      Object.entries(userData.value).filter(([_, v]) => v !== '')
+      Object.entries(userData.value).filter(([_, v]) => v !== "")
     );
 
     await updateUser(userId, dataToUpdate);
 
     toast({
-      title: 'Thành công',
-      description: 'Cập nhật người dùng thành công',
+      title: "Thành công",
+      description: "Cập nhật người dùng thành công",
     });
   } catch (error: any) {
-    const errorMessage = error.statusMessage || 'Không thể cập nhật thông tin.';
-    
+    const errorMessage = error.statusMessage || "Không thể cập nhật thông tin.";
+
     toast({
-      title: 'Lỗi',
+      title: "Lỗi",
       description: errorMessage,
       duration: 5000,
     });
-    console.error('Lỗi cập nhật người dùng:', error);
+    console.error("Lỗi cập nhật người dùng:", error);
   }
 };
 
-
 definePageMeta({
-  layout: 'admin'
-})
-
-
+  layout: "admin",
+});
 </script>
 
 <template>
@@ -112,7 +106,10 @@ definePageMeta({
     </Breadcrumb>
   </header>
 
-  <form @submit.prevent="handleSubmit" class="p-6 bg-white rounded-lg shadow-md space-y-6">
+  <form
+    @submit.prevent="handleSubmit"
+    class="p-6 bg-white rounded-lg shadow-md space-y-6"
+  >
     <div class="flex space-x-4">
       <div class="flex-1">
         <Label for="userName">Tên đăng nhập</Label>
@@ -120,7 +117,12 @@ definePageMeta({
       </div>
       <div class="flex-1">
         <Label for="password">Mật khẩu</Label>
-        <Input id="password" type="password" placeholder="Không thay đổi nếu để trống" v-model="userData.password" />
+        <Input
+          id="password"
+          type="password"
+          placeholder="Không thay đổi nếu để trống"
+          v-model="userData.password"
+        />
       </div>
     </div>
 
