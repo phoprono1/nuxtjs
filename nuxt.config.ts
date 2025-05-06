@@ -19,8 +19,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
-      API_BASE_URL: process.env.API_BASE_URL,
-      backendUrl: process.env.BACKEND_URL || 'http://localhost:3005',
+      API_BASE_URL: process.env.API_BASE_URL || 'https://dt-mdeploy-production.up.railway.app/api',
+      backendUrl: process.env.BACKEND_URL || 'https://dt-mdeploy-production.up.railway.app',
     },
   },
   css: ["~/assets/css/scrollbar.css"],
